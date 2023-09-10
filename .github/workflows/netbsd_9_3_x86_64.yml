@@ -1,0 +1,62 @@
+name: NetBSD 9.3 x86_64
+
+env:
+  PACKER_VERSION: '1.8.4'
+
+on:
+  push:
+    branches: '*'
+    tags: 'v*'
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: ${{ matrix.version }}, ${{ matrix.architecture.name }}
+    runs-on: ubuntu-latest
+    container: alpine:edge
+    strategy:
+        matrix:
+          version:
+            - 9.3
+
+          architecture:
+            - name: x86-64
+              qemu: x86_64
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Install Dependencies
+        run: apk add --no-cache qemu-img "qemu-system-${{ matrix.architecture.qemu }}"
+
+      - uses: hashicorp/setup-packer@main
+        with:
+          version: ${{ env.PACKER_VERSION }}
+
+      - name: Build Image
+        run: |
+          PACKER_LOG=1 ./build.sh \
+            '${{ matrix.version }}' \
+            '${{ matrix.architecture.name }}' \
+            -var 'headless=true'
+
+      - name: Extract Version
+        id: version
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/v}
+
+      - name: Create Release
+        id: create_release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v1
+        with:
+          name: NetBSD ${{ steps.version.outputs.VERSION }}
+          draft: true
+          files: output/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
