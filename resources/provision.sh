@@ -8,7 +8,7 @@ setup_path() {
 }
 
 install_extra_packages() {
-  pkgin -y install bash curl rsync sudo git automake autoconf gmake
+  pkgin -y install bash curl rsync sudo git gcc automake autoconf gmake
 }
 
 setup_sudo() {
