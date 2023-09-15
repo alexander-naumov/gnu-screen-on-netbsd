@@ -5,6 +5,8 @@
 [![NetBSD 10.0 x86_64](https://github.com/alexander-naumov/gnu-screen-on-netbsd/actions/workflows/netbsd_10_0_x86_64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen-on-netbsd/actions/workflows/netbsd_10_0_x86_64.yml)
 [![NetBSD 10.0 aarch64](https://github.com/alexander-naumov/gnu-screen-on-netbsd/actions/workflows/netbsd_10_0_aarch64.yml/badge.svg)](https://github.com/alexander-naumov/gnu-screen-on-netbsd/actions/workflows/netbsd_10_0_aarch64.yml)
 
+<img align="right" src="NetBSD-logo.png" height="200">
+
 This project builds the NetBSD VM image for the
 [cross-platform-actions/action](https://github.com/cross-platform-actions/action)
 GitHub action and build GNU Screen on it.
@@ -59,27 +61,40 @@ The following architectures and versions are supported:
 
 1. Clone the repository:
     ```
-    git clone https://github.com/cross-platform-actions/netbsd-builder
-    cd netbsd-builder
+    % git clone https://github.com/cross-platform-actions/netbsd-builder
+    % cd netbsd-builder
     ```
 
 2. Run `build.sh` to build the image:
     ```
-    ./build.sh <version> <architecture>
+    % ./build.sh <version> <architecture>
     ```
     Where `<version>` and `<architecture>` are the any of the versions or
     architectures available in the above table.
 
 The above command will build the VM image and the resulting disk image will be
-at the path: `output/netbsd-9.2-x86-64.qcow2`.
+at the path:
+`output/netbsd-9.2-x86-64.qcow2`.
 
 3. Get the GNU Screen source code from the devel repository and build it:
     ```
-    git -c http.sslVerify=false clone https://github.com/alexander-naumov/screen.git
-    cd screen/src
-    ./autogen.sh
-    ./configure CFLAGS="-Wall"
-    gmake
+    % uname -a
+    % cc -v
+    % git -c http.sslVerify=false clone https://github.com/alexander-naumov/gnu-screen.git
+    % cd gnu-screen/src
+    % ./autogen.sh
+
+    % cc=gcc ./configure CFLAGS="-Wall -DDEBUG"
+    % gmake
+    % ./screen -v
+    % ./screen -ls || echo $?
+    % ./screen --help
+    % gmake clean
+
+    % cc=clang ./configure CFLAGS="-Wall -DDEBUG"
+    % gmake
+    % ./screen -v
+    % ./screen --help
     ```
 
 ## Additional Information
