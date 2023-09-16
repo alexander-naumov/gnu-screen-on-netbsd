@@ -3,11 +3,17 @@
 set -exu
 
 uname -a
-cc -v
 git -c http.sslVerify=false clone https://github.com/alexander-naumov/gnu-screen.git
 cd gnu-screen/src
 ./autogen.sh
-./configure CFLAGS="-Wall -DDEBUG"
+gcc -v
+cc=gcc ./configure CFLAGS="-Wall"
+gmake
+./screen -v
+./screen -ls
+gmake clean
+clang -v
+cc=clang ./configure CFLAGS="-Wall -DDEBUG"
 gmake
 ./screen -v
 ./screen --help
