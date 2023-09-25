@@ -86,6 +86,7 @@ at the path:
     % ./autogen.sh
 
     % cc=clang ./configure CFLAGS="-Wall -DDEBUG"
+    % grep @CFLAGS@ Makefile.in
     % gmake
     % ./screen -v
     % ./screen -ls || echo $?
