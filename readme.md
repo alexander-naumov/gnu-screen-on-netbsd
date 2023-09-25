@@ -32,6 +32,7 @@ In addition to the above file sets, the following packages are installed as well
 * rsync
 * sudo
 * git
+* clang
 * autoconf
 * automake
 * gmake
@@ -84,16 +85,10 @@ at the path:
     % cd gnu-screen/src
     % ./autogen.sh
 
-    % cc=gcc ./configure CFLAGS="-Wall -DDEBUG"
-    % gmake
-    % ./screen -v
-    % ./screen -ls || echo $?
-    % ./screen --help
-    % gmake clean
-
     % cc=clang ./configure CFLAGS="-Wall -DDEBUG"
     % gmake
     % ./screen -v
+    % ./screen -ls || echo $?
     % ./screen --help
     ```
 
