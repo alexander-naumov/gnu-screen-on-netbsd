@@ -15,7 +15,8 @@ cd gnu-screen/src
 #gmake clean
 
 clang -v
-cc=clang ./configure CFLAGS="-Wall -DDEBUG"
+cc=clang ./configure CFLAGS="-Wall"
+grep @CFLAGS@ Makefile.in
 gmake
 ./screen -v
 ./screen -ls || echo $?

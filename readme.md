@@ -85,7 +85,7 @@ at the path:
     % cd gnu-screen/src
     % ./autogen.sh
 
-    % cc=clang ./configure CFLAGS="-Wall -DDEBUG"
+    % cc=clang ./configure CFLAGS="-Wall"
     % grep @CFLAGS@ Makefile.in
     % gmake
     % ./screen -v
